@@ -1,0 +1,57 @@
+<ui:composition 
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:h="jakarta.faces.html"
+    xmlns:pt="jakarta.faces.passthrough">
+    <header id="main-header">
+        <div class="container">
+            <h:link styleClass="brand" value="FacesBlog" outcome="/index.xhtml"/>
+            <div class="search-profile-container">
+                <h:inputText styleClass="search-input" pt:placeholder="Search..." />
+                <div class="profile-container">
+                    <img src="#{request.contextPath}/resources/img/profile-avatar.png" alt="Profile" class="profile-icon"/>
+                    <i class="fa fa-chevron-down profile-arrow"></i>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-header">
+                            <div class="user-avatar">
+                                <img src="#{request.contextPath}/resources/img/profile-avatar.png" alt="Profile"/>
+                            </div>
+                            <div class="user-info">
+                                <span class="user-name">Eucharia Odili</span>
+                                <span class="user-role">Administrator</span>
+                                <span class="user-email">odileucharia1@gmail.com</span>
+                            </div>
+                        </div>
+                        <ul class="dropdown-list">
+                            <li class="dropdown-item">
+                                <i class="fa fa-cog"></i>
+                                <span>Settings</span>
+                            </li>
+                            <li class="dropdown-item">
+                                <i class="fa fa-user"></i>
+                                <span>Profile</span>
+                            </li>
+                            <li class="dropdown-item">
+                                <i class="fa fa-file"></i>
+                                <span>Posts</span>
+                            </li>
+                            <li class="dropdown-item">
+                                <i class="fa fa-sign-out-alt"></i>
+                                <span>Logout</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>          
+        </div>
+        <nav class="navbar">
+            <div class="container">
+                <ul class="menu">
+                    <li><h:link value="About" outcome="/about.xhtml"/></li>
+                    <li><h:link value="Tech" outcome="/category.xhtml"/></li>
+                    <li><h:link value="Economy" outcome="/category.xhtml"/></li>
+                    <li><h:link value="Entertainment" outcome="/category.xhtml"/></li>
+                </ul>   
+            </div>
+        </nav>
+    </header>
+</ui:composition>

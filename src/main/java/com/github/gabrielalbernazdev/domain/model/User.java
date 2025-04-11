@@ -1,4 +1,4 @@
-package com.github.gabrielalbernazdev.domain.entity;
+package com.github.gabrielalbernazdev.domain.model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

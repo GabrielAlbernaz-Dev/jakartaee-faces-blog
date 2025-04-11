@@ -1,0 +1,23 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:h="jakarta.faces.html"
+    xmlns:pt="jakarta.faces.passthrough"
+    xmlns:composite="http://xmlns.jcp.org/jsf/composite">
+    <composite:interface>
+        <composite:attribute name="post" required="true"/>
+    </composite:interface>
+    <composite:implementation>
+        <div class="post">
+            <div class="categories-links">
+                <ui:repeat value="#{cc.attrs.categories}" var="category">
+                    <h:outputLink class="category-link" value="">#{category.name}</h:outputLink>
+                </ui:repeat>
+            </div>
+            <h:outputLink value="" styleClass="post-title">#{cc.attrs.post.title}</h:outputLink>
+            <h:outputText value="Published by Joan Smith on November 2, 2023" styleClass="post-publish-text" />
+            <img src="#{request.contextPath}/resources/img/profile-avatar.png" alt="Post image" class="post-image" />
+            <h:outputText value="#{cc.attrs.post.content}" styleClass="post-content" />
+        </div>
+    </composite:implementation>
+</ui:composition>

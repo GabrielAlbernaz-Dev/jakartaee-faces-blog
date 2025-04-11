@@ -1,0 +1,63 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:h="jakarta.faces.html"
+    xmlns:pt="jakarta.faces.passthrough"
+    xmlns:composite="http://xmlns.jcp.org/jsf/composite">
+  <composite:interface/>
+  <composite:implementation>
+    <div class="content-sidenav">
+      <div class="body">
+        <composite:insertChildren/>
+      </div>
+      <aside class="sidebar">
+       <div class="top-categories">
+          <h3 class="heading">Top Categories</h3>
+          <ol class="categories-list">
+            <li><h:link value="Tech" outcome="/category.xhtml"/></li>
+            <li><h:link value="Economy" outcome="/category.xhtml"/></li>
+            <li><h:link value="Entertainment" outcome="/category.xhtml"/></li>
+            <li><h:link value="Lifestyle" outcome="/category.xhtml"/></li>
+            <li><h:link value="Travel" outcome="/category.xhtml"/></li>
+          </ol>
+       </div>
+       <div class="newsletter">
+          <h3 class="heading">Join the club!</h3>
+          <p class="text">Be the first to know! Join our newsletter for updates and inspiration</p>
+          <h:form>
+            <div class="email-wrapper">
+                <h:inputText value="" styleClass="email-input" id="email" pt:placeholder="Search..." />
+                <h:commandButton value="Send" styleClass="email-wrapper-submit">
+                    <!--
+                        <f:ajax> é opcional; se quiser ajax, use:
+                        <f:ajax execute="@form" render="@form" />
+                    -->
+                </h:commandButton>
+            </div>
+          </h:form>
+       </div>
+       <div class="recent-posts">
+        <h3 class="heading">Recent Posts</h3>
+        <div class="posts">
+          <div class="post">
+            <img src="#{request.contextPath}/resources/img/profile-avatar.png" alt="Homemade gifts for every occasion" />
+            <p>Title Post 1</p>
+          </div>
+          <div class="post">
+            <img src="#{request.contextPath}/resources/img/profile-avatar.png" alt="Halloween decor ideas for your porch" />
+            <p>Title Post 2</p>
+          </div>
+          <div class="post">
+            <img src="#{request.contextPath}/resources/img/profile-avatar.png" alt="My tips for hosting an easy birthday party" />
+            <p>Title Post 3</p>
+          </div>
+          <div class="post">
+            <img src="#{request.contextPath}/resources/img/profile-avatar.png" alt="My morning journaling routine" />
+            <p>Title Post 4</p>
+          </div>
+        </div>
+      </div>
+      </aside>
+    </div>
+  </composite:implementation>
+</ui:composition>

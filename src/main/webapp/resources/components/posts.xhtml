@@ -1,0 +1,18 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:h="jakarta.faces.html"
+    xmlns:pt="jakarta.faces.passthrough"
+    xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+    xmlns:comp="http://xmlns.jcp.org/jsf/composite/components">
+    <composite:interface>
+        <composite:attribute name="posts" required="true" type="java.util.List"/>
+    </composite:interface>
+    <composite:implementation>
+        <div class="posts">
+            <ui:repeat value="#{cc.attrs.posts}" var="post">
+                <comp:post post="#{post}" />
+            </ui:repeat>
+        </div>
+    </composite:implementation>
+</ui:composition>

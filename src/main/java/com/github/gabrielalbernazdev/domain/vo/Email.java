@@ -7,34 +7,35 @@ import jakarta.validation.constraints.NotBlank;
 public final class Email {
     @jakarta.validation.constraints.Email
     @NotBlank
-    private String address;
+    private final String value;
 
-    private Email(String address) {
-        this.address = address;
+    private Email(String value) {
+        this.value = value;
     }
 
-    public String getAddress() {
-        return address;
+    public String getValue() {
+        return value;
     }
 
-    public static Email of(String address) {
-        return new Email(address);
+    public static Email of(String value) {
+        return new Email(value);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Email email)) return false;
-        return Objects.equals(address, email.address);
+        if (!(o instanceof Email)) return false;
+        Email email = (Email) o;
+        return Objects.equals(value, email.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(address);
+        return Objects.hash(value);
     }
 
     @Override
     public String toString() {
-        return "Email{" + address + '}';
+        return "Email{" + value + '}';
     }
 }
