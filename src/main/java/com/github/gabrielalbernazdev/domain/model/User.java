@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.github.gabrielalbernazdev.domain.converter.EmailConverter;
 import com.github.gabrielalbernazdev.domain.vo.Email;
+import com.github.gabrielalbernazdev.util.PasswordUtil;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -33,6 +34,9 @@ public class User {
     @Column(name = "email")
     private Email email;
 
+    @Column(name = "active")
+    private Boolean active;
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
@@ -48,6 +52,14 @@ public class User {
     @PreUpdate
     public void preUpdate() {
         updatedAt = LocalDateTime.now();
+    }
+
+    @PrePersist
+    @PreUpdate
+    private void hashPassword() {
+        if (password != null && !password.startsWith("$2a$")) {
+            this.password = PasswordUtil.encode(password);
+        }
     }
 
     public User() {}

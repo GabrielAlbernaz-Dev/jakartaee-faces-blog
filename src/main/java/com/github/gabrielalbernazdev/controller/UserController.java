@@ -6,5 +6,5 @@ import jakarta.inject.Named;
 
 @Named
 public class UserController implements Serializable {
-    
+
 }
