@@ -224,12 +224,12 @@ p, a, span, li, button, input, select, textarea {
 
 #main-header .container .dropdown-item .fa {
     font-size: 1.8rem;
-    color: #666;
+    color: var(--gray-dark);
 }
 
-#main-header .container .dropdown-item span {
+#main-header .container .dropdown-item .action {
     font-size: 1.5rem;
-    color: #333;
+    color: var(--dark);
     flex: 1;
 }
 

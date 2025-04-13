@@ -28,7 +28,7 @@ public class AuthFilter implements Filter {
 
         final String path = HttpUtil.getHttpRequestURIPath(req);
         boolean isPrivatePath = path.equals("/") 
-            || path.equalsIgnoreCase("/private");
+            || path.toLowerCase().contains("/private");
 
         if(isPrivatePath && userSession.getCurrentUser() == null) {
             res.sendRedirect(req.getServletContext().getContextPath() + "/login.xhtml");
