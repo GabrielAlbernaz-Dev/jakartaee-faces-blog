@@ -7,14 +7,14 @@ import java.util.UUID;
 import com.github.gabrielalbernazdev.domain.model.User;
 import com.github.gabrielalbernazdev.domain.vo.Email;
 
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 
-@ApplicationScoped
+@Stateless
 public class UserRepository {
     @PersistenceContext
     private EntityManager em;

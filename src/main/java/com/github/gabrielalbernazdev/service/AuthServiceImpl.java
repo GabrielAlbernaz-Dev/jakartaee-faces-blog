@@ -6,8 +6,10 @@ import com.github.gabrielalbernazdev.domain.model.User;
 import com.github.gabrielalbernazdev.repository.UserRepository;
 import com.github.gabrielalbernazdev.util.PasswordUtil;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+@ApplicationScoped
 public class AuthServiceImpl implements AuthService {
     @Inject
     private UserRepository userRepository;

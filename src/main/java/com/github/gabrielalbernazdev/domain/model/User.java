@@ -46,20 +46,14 @@ public class User {
     @PrePersist
     public void prePersist() {
         createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
+        if (password != null && !password.startsWith("$2a$")) {
+            this.password = PasswordUtil.encode(password);
+        }
     }
 
     @PreUpdate
     public void preUpdate() {
         updatedAt = LocalDateTime.now();
-    }
-
-    @PrePersist
-    @PreUpdate
-    private void hashPassword() {
-        if (password != null && !password.startsWith("$2a$")) {
-            this.password = PasswordUtil.encode(password);
-        }
     }
 
     public User() {}

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="jakarta.enterprise.inject.spi.Bean"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="jakarta.enterprise.inject.spi.Bean
+           https://jakarta.ee/xml/ns/javaee/beans_2_0.xsd">
+</beans>

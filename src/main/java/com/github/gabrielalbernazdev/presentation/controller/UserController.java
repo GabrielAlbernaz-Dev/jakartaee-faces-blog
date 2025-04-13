@@ -1,4 +1,4 @@
-package com.github.gabrielalbernazdev.controller;
+package com.github.gabrielalbernazdev.presentation.controller;
 
 import java.io.Serializable;
 

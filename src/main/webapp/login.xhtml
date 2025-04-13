@@ -1,0 +1,31 @@
+<ui:composition 
+    xmlns:ui="jakarta.faces.facelets" 
+    xmlns:h="jakarta.faces.html"
+    xmlns:f="jakarta.faces.core"
+    template="WEB-INF/template/publicLayout.xhtml">
+    
+    <ui:define name="pageTitle">Login</ui:define>
+    
+    <ui:define name="content">
+        <h1>Login Page</h1>
+        <br/>
+        <h:messages global="true" />
+        <h:form id="loginForm">
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputLabel for="username" value="Username:" />
+                <h:inputText id="username" value="#{authController.user.username}">
+                    <f:validateRequired message="Username is required" />
+                </h:inputText>
+                
+                <h:outputLabel for="password" value="Password:" />
+                <h:inputSecret id="password" value="#{authController.user.password}">
+                    <f:validateRequired message="Password is required" />
+                </h:inputSecret>
+            </h:panelGrid>
+            
+            <h:commandButton value="Login" action="#{authController.login}" />
+            <br />
+            <h:link value="Register here" outcome="/register.xhtml"/>
+        </h:form>
+    </ui:define>
+</ui:composition>

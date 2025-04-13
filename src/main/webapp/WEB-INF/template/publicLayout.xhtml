@@ -10,14 +10,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="#{request.contextPath}/resources/css/main.css" rel="stylesheet"/>
 </h:head>
-<h:body>
-    <ui:include src="/WEB-INF/template/header.xhtml" />    
-    <main id="main-content" role="main">
+<h:body>  
+    <main id="public-main-content" role="main">
         <div class="container">
             <ui:insert name="content" />
         </div>
     </main>
-    <ui:include src="/WEB-INF/template/footer.xhtml" />
     <script src="#{request.contextPath}/resources/js/main.js"></script>
 </h:body>
 </html>
