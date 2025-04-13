@@ -83,54 +83,6 @@ p, a, span, li, button, input, select, textarea {
 	margin: 0 auto;
 }
 
-.email-wrapper {
-    display: flex;       
-    align-items: center;       
-    background-color: var(--light);    
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-    border-radius: 4px;       
-}
-
-.email-input {
-    background: none;           
-    border: none;              
-    color: var(--dark);               
-    padding: .8rem 1.2rem;          
-    outline: none;              
-    width: 100%;               
-}
-
-.email-input::-webkit-input-placeholder {
-    color: var(--dark); 
-}
-
-.email-input:-moz-placeholder {
-    color: var(--dark); 
-}
-
-.email-input::-moz-placeholder {
-    color: var(--dark); 
-}
-
-.email-input:-ms-input-placeholder {
-    color: var(--dark); 
-}
-
-.email-wrapper-submit {
-    background-color: var(--dark);  
-    border: none;           
-    color: var(--light);            
-    cursor: pointer;        
-    padding: 8px 1rem;       
-    font-size: 1.4rem;     
-    border-top-right-radius: 4px;
-    transition: all .2s;   
-}
-
-.email-wrapper-submit:hover {
-    opacity: .8;          
-}
-
 #main-header .container {
 	display: flex;
 	align-items: center;
@@ -306,7 +258,8 @@ p, a, span, li, button, input, select, textarea {
 	padding: 2.5rem 0;
 }
 
-#private-main-content h1 {
+#private-main-content h1,
+.main-title {
 	font-size: 5.8rem;
 }
 
