@@ -142,10 +142,20 @@
     color: var(--gray-dark);
 }
 
-#main-header .container .dropdown-item .action {
+#main-header .container .dropdown-item .action,
+#main-header .container .dropdown-item .logout {
     font-size: 1.5rem;
     color: var(--dark);
     flex: 1;
+}
+
+#main-header .container .dropdown-item .logout {
+    background: none;
+    border: none;
+}
+
+#main-header .container .dropdown-item .logout span {
+    padding: 0;
 }
 
 #main-header .navbar {

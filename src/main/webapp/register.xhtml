@@ -10,10 +10,8 @@
     <ui:define name="content">
         <comp:centerLayout>
             <h1 class="main-title">Register Page</h1>
-
             <h:form id="registerForm" styleClass="form">
-
-                <p:messages id="registerMessages" closable="true" showDetail="false"/>
+                <p:messages id="register-messages" closable="true" showDetail="false"/>
 
                 <div class="form-group">
                     <p:outputLabel for="username" value="Username:" />
@@ -45,7 +43,7 @@
 
                 <p:commandButton value="Register"
                                  action="#{authController.register}"
-                                 update="registerMessages"
+                                 update="register-messages"
                                  styleClass="form-btn submit" />
 
             </h:form>

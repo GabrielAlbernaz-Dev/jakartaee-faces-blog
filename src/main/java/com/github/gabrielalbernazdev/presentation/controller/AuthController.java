@@ -51,6 +51,11 @@ public class AuthController implements Serializable {
         return null;
     }
 
+    public String logout() {
+        userSession.setCurrentUser(null);
+        return "/private/index?faces-redirect=true";
+    }
+
     public User getUser() {
         return user;
     }

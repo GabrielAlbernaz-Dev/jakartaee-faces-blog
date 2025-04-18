@@ -1,6 +1,7 @@
 <ui:composition 
     xmlns:ui="jakarta.faces.facelets"
     xmlns:h="jakarta.faces.html"
+    xmlns:p="http://primefaces.org/ui"
     xmlns:pt="jakarta.faces.passthrough">
     <header id="main-header">
         <div class="container">
@@ -36,7 +37,13 @@
                             </li>
                             <li class="dropdown-item">
                                 <i class="fa fa-sign-out-alt"></i>
-                                <span class="action">Logout</span>
+                                <h:form styleClass="logout-form">
+                                    <p:commandButton value="Logout"
+                                                     action="#{authController.logout}"
+                                                     process="@this"
+                                                     update="@none"
+                                                     styleClass="logout"/>
+                                </h:form>
                             </li>
                         </ul>
                     </div>

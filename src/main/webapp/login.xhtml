@@ -11,18 +11,22 @@
         <comp:centerLayout>
             <h1 class="main-title">Login Page</h1>
             <h:form id="loginForm" styleClass="form">
-                <p:messages id="msgs" closable="true" showDetail="false"/>
+                <p:messages id="login-messages" closable="true" showDetail="false"/>
 
                 <div class="form-group">
                     <p:outputLabel for="username" value="Username:" />
-                    <p:inputText id="username" value="#{authController.user.username}" required="true"
+                    <p:inputText id="username" 
+                                 value="#{authController.user.username}" 
+                                 required="true"
                                  requiredMessage="Username is required"
                                  styleClass="form-control"/>
-                </div>
+                </div> 
                 
                 <div class="form-group">
                     <p:outputLabel for="password" value="Password:" />
-                    <p:password id="password" value="#{authController.user.password}" required="true"
+                    <p:password id="password" 
+                                value="#{authController.user.password}" 
+                                required="true"
                                 requiredMessage="Password is required"
                                 feedback="false"
                                 styleClass="form-control"/>
@@ -30,7 +34,7 @@
 
                 <p:commandButton value="Login"
                                  action="#{authController.login}"
-                                 update="msgs"
+                                 update="login-messages"
                                  styleClass="form-btn submit"/>
 
                 <p:link value="Register here" outcome="/register.xhtml" styleClass="form-link"/>
