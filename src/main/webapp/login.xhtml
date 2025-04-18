@@ -1,7 +1,7 @@
 <ui:composition 
     xmlns:ui="jakarta.faces.facelets" 
     xmlns:h="jakarta.faces.html"
-    xmlns:f="jakarta.faces.core"
+    xmlns:p="http://primefaces.org/ui"
     xmlns:comp="http://xmlns.jcp.org/jsf/composite/components"
     template="WEB-INF/template/publicLayout.xhtml">
     
@@ -10,24 +10,30 @@
     <ui:define name="content">
         <comp:centerLayout>
             <h1 class="main-title">Login Page</h1>
-            <h:messages global="true" />
             <h:form id="loginForm" styleClass="form">
+                <p:messages id="msgs" closable="true" showDetail="false"/>
+
                 <div class="form-group">
-                    <h:outputLabel for="username" value="Username:" />
-                    <h:inputText id="username" value="#{authController.user.username}" styleClass="form-control">
-                        <f:validateRequired message="Username is required" />
-                    </h:inputText>
+                    <p:outputLabel for="username" value="Username:" />
+                    <p:inputText id="username" value="#{authController.user.username}" required="true"
+                                 requiredMessage="Username is required"
+                                 styleClass="form-control"/>
                 </div>
                 
                 <div class="form-group">
-                    <h:outputLabel for="password" value="Password:" />
-                    <h:inputSecret id="password" value="#{authController.user.password}" styleClass="form-control">
-                        <f:validateRequired message="Password is required" />
-                    </h:inputSecret>
+                    <p:outputLabel for="password" value="Password:" />
+                    <p:password id="password" value="#{authController.user.password}" required="true"
+                                requiredMessage="Password is required"
+                                feedback="false"
+                                styleClass="form-control"/>
                 </div>
-                
-                <h:commandButton value="Login" action="#{authController.login}" styleClass="form-btn submit" />
-                <h:link value="Register here" outcome="/register.xhtml" styleClass="form-link"/>
+
+                <p:commandButton value="Login"
+                                 action="#{authController.login}"
+                                 update="msgs"
+                                 styleClass="form-btn submit"/>
+
+                <p:link value="Register here" outcome="/register.xhtml" styleClass="form-link"/>
             </h:form>
         </comp:centerLayout>
     </ui:define>

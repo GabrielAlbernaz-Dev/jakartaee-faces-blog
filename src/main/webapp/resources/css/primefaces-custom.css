@@ -1,0 +1,9 @@
+.ui-messages ul {
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+}
+
+.ui-messages-info-summary, .ui-messages-warn-summary, .ui-messages-error-summary, .ui-messages-fatal-summary, .ui-message-info-summary, .ui-message-warn-summary, .ui-message-error-summary, .ui-message-fatal-summary {
+    font-size: 1.25rem;
+}
