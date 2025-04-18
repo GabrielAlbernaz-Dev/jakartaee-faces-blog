@@ -1,9 +1,10 @@
-package com.github.gabrielalbernazdev.service;
+package com.github.gabrielalbernazdev.service.impl;
 
 import java.util.Optional;
 
 import com.github.gabrielalbernazdev.domain.model.User;
 import com.github.gabrielalbernazdev.repository.UserRepository;
+import com.github.gabrielalbernazdev.service.AuthService;
 import com.github.gabrielalbernazdev.util.PasswordUtil;
 
 import jakarta.enterprise.context.ApplicationScoped;

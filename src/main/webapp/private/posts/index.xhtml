@@ -1,0 +1,12 @@
+<ui:composition 
+    xmlns:ui="jakarta.faces.facelets" 
+    xmlns:comp="http://xmlns.jcp.org/jsf/composite/components"
+    xmlns:h="jakarta.faces.html"
+    template="/WEB-INF/template/privateLayout.xhtml">
+    <ui:define name="pageTitle">Posts</ui:define>
+    <ui:define name="content">
+        <comp:contentSidenav>
+            <comp:posts posts="#{postController.posts}" />
+        </comp:contentSidenav>
+    </ui:define>
+</ui:composition> 
