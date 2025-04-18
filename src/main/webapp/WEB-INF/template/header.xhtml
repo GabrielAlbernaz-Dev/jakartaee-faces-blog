@@ -35,14 +35,15 @@
                                 <i class="fa fa-file"></i>
                                 <span class="action">Posts</span>
                             </li>
-                            <li class="dropdown-item">
-                                <i class="fa fa-sign-out-alt"></i>
-                                <h:form styleClass="logout-form">
+                            <li class="dropdown-item has-child-container logout-container">
+                                <h:form styleClass="dropdown-container logout-form">
+                                    <i class="fa fa-sign-out-alt"></i>
                                     <p:commandButton value="Logout"
                                                      action="#{authController.logout}"
                                                      process="@this"
                                                      update="@none"
-                                                     styleClass="logout"/>
+                                                     styleClass="logout">
+                                    </p:commandButton>
                                 </h:form>
                             </li>
                         </ul>
