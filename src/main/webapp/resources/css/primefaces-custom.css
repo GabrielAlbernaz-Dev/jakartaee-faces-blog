@@ -1,3 +1,21 @@
+body .ui-widget {
+    font-family: "Instrument Sans", sans-serif;
+}
+
+body .ui-button {
+    font-size: 1.4rem;
+}
+
+body .ui-button.danger {
+    background-color: #f44336;
+    border-color: #f44336;
+}
+
+body .ui-button.danger:hover {
+    background-color: #d32f2f;
+    border-color: #d32f2f;
+}
+
 .ui-messages ul {
     display: flex;
     flex-direction: column;

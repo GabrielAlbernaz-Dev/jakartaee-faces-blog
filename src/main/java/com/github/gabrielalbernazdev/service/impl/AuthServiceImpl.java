@@ -1,6 +1,7 @@
 package com.github.gabrielalbernazdev.service.impl;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import com.github.gabrielalbernazdev.domain.model.User;
 import com.github.gabrielalbernazdev.repository.UserRepository;
@@ -16,19 +17,21 @@ public class AuthServiceImpl implements AuthService {
     private UserRepository userRepository;
 
     @Override
-    public void login(String username, String password) {
+    public User login(String username, String password) {
         Optional<User> user = userRepository.findByUsername(username);
-        if(user.isEmpty()) {
+        if(!user.isPresent()) {
             throw new RuntimeException("User does not exists");
         }
 
         if(!PasswordUtil.checkPassword(password, user.get().getPassword())) {
             throw new RuntimeException("Credentials does not match!");
         }
+
+        return user.get();
     }
 
     @Override
-    public void register(User user) {
-        userRepository.save(user);
+    public UUID register(User user) {
+        return userRepository.save(user);
     }
 }

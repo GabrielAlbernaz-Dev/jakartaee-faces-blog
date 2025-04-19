@@ -65,13 +65,16 @@ public class UserRepositoryImpl implements  UserRepository {
     }
 
     @Override
-    public void save(User user) {
-        if(user.getId() != null) {
-            em.persist(user);
-            return;
+    public UUID save(User user) {
+        if (user.getId() == null) {
+            em.persist(user);      
+            em.flush();            
+            return user.getId();
         }
 
-        em.merge(user);
+        User managed = em.merge(user); 
+        em.flush();
+        return managed.getId();
     }
 
     @Override

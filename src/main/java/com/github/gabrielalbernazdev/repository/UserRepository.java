@@ -13,6 +13,6 @@ public interface UserRepository {
     Optional<User> findById(UUID id);
     Optional<User> findByUsername(String username);
     Optional<User> findByEmail(Email email);
-    void save(User user);
+    UUID save(User user);
     void delete(User user);
 }

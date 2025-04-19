@@ -33,7 +33,9 @@
                             </li>
                             <li class="dropdown-item">
                                 <i class="fa fa-file"></i>
-                                <span class="action">Posts</span>
+                                <p:link styleClass="action" 
+                                        value="Posts" 
+                                        outcome="/private/posts/index.xhtml"/>
                             </li>
                             <li class="dropdown-item has-child-container logout-container">
                                 <h:form styleClass="dropdown-container logout-form">
@@ -42,8 +44,7 @@
                                                      action="#{authController.logout}"
                                                      process="@this"
                                                      update="@none"
-                                                     styleClass="logout">
-                                    </p:commandButton>
+                                                     styleClass="logout"/>
                                 </h:form>
                             </li>
                         </ul>

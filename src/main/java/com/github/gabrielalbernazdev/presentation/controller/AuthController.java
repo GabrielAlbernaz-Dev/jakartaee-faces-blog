@@ -1,6 +1,7 @@
 package com.github.gabrielalbernazdev.presentation.controller;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import com.github.gabrielalbernazdev.domain.model.User;
 import com.github.gabrielalbernazdev.service.AuthService;
@@ -26,8 +27,8 @@ public class AuthController implements Serializable {
     public String login() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         try {
-            service.login(user.getUsername(), user.getPassword());
-            userSession.setCurrentUser(user);
+            User userLogin = service.login(user.getUsername(), user.getPassword());
+            userSession.setCurrentUser(userLogin);
             facesContext.addMessage(null, new FacesMessage("Login successful!"));
             return "/private/index?faces-redirect=true";
         } catch (Exception e) {
@@ -40,7 +41,8 @@ public class AuthController implements Serializable {
     public String register() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         try {
-            service.register(user);
+            UUID userId = service.register(user);
+            user.setId(userId);
             userSession.setCurrentUser(user);
             facesContext.addMessage(null, new FacesMessage("Register successful!"));
             return "/private/index?faces-redirect=true";

@@ -5,34 +5,66 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.github.gabrielalbernazdev.domain.model.Post;
+import com.github.gabrielalbernazdev.domain.model.User;
+import com.github.gabrielalbernazdev.mapper.PostMapper;
+import com.github.gabrielalbernazdev.mapper.UserMapper;
+import com.github.gabrielalbernazdev.presentation.dto.PostDTO;
+import com.github.gabrielalbernazdev.presentation.dto.UserDTO;
+import com.github.gabrielalbernazdev.service.PostService;
+import com.github.gabrielalbernazdev.session.UserSession;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
 @Named
 @ViewScoped
 public class PostController implements Serializable {
-    private List<Post> posts = new ArrayList<>();
+    @Inject
+    private PostService service;
+
+    @Inject
+    private UserSession userSession;
+
+    private PostDTO post = new PostDTO();
+    private List<PostDTO> posts = new ArrayList<>();
     private List<String> categories = new ArrayList<>();
 
     @PostConstruct
     public void init() {
-        String lorem = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
-        posts.add(new Post("Title Post 1", lorem));
-        posts.add(new Post("Title Post 2", lorem));
-        posts.add(new Post("Title Post 3", lorem));
+        User currentUser = userSession.getCurrentUser();
+        System.out.println("------------------------- ");
+        System.out.println("Current user: " + currentUser);
+        System.out.println("Current user id: " + currentUser.getId());
+        System.out.println("------------------------- ");
+        if(currentUser != null) {
+            UserDTO userDTO = UserMapper.toDTO(userSession.getCurrentUser());
+            posts = service.getAllByUser(userDTO);
+        }
 
         categories.add("Tech");
         categories.add("Economy");
         categories.add("Entertainment");
     }
 
-    public List<Post> getPosts() {
+    public void create() {
+        
+    }
+
+    public PostDTO getPost() {
+        return post;
+    }
+
+    public void setPost(PostDTO post) {
+        this.post = post;
+    }
+
+    public List<PostDTO> getPosts() {
         return posts;
     }
 
-    public void setPosts(List<Post> posts) {
+    public void setPosts(List<PostDTO> posts) {
         this.posts = posts;
     }
 

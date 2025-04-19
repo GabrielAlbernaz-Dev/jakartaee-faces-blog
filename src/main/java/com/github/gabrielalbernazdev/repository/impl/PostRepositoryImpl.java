@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.github.gabrielalbernazdev.domain.model.Post;
+import com.github.gabrielalbernazdev.domain.model.User;
 import com.github.gabrielalbernazdev.repository.PostRepository;
 
 import jakarta.ejb.Stateless;
@@ -19,16 +20,20 @@ public class PostRepositoryImpl implements PostRepository {
     private EntityManager entityManager;
 
     @Override
-    public List<Post> findAll() {
-        String jpql = "SELECT p FROM Post p";
+    public List<Post> findAllByUser(User user) {
+        UUID userId = user.getId();
+        String jpql = "SELECT p FROM Post p WHERE p.user.id = :userId";
         return entityManager.createQuery(jpql, Post.class)
+                .setParameter("userId", userId)
                 .getResultList();
     }
 
     @Override
-    public List<Post> findAllActive() {
-        String jpql = "SELECT p FROM Post p WHERE p.deletedAt IS NULL";
+    public List<Post> findAllActiveByUser(User user) {
+        UUID userId = user.getId();
+        String jpql = "SELECT p FROM Post p WHERE p.deletedAt IS NULL AND p.user.id = :userId";
         return entityManager.createQuery(jpql, Post.class)
+                .setParameter("userId", userId)
                 .getResultList();
     }
 

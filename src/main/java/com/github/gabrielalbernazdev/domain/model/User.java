@@ -1,18 +1,22 @@
 package com.github.gabrielalbernazdev.domain.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import com.github.gabrielalbernazdev.domain.converter.EmailConverter;
 import com.github.gabrielalbernazdev.domain.vo.Email;
 import com.github.gabrielalbernazdev.util.PasswordUtil;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -37,6 +41,9 @@ public class User {
     @Column(name = "active")
     private Boolean active;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> posts = new ArrayList<>();
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
@@ -57,6 +64,11 @@ public class User {
     }
 
     public User() {}
+
+    public User(UUID id, String username) {
+        this.id = id;
+        this.username = username;
+    }
 
     public User(UUID id, String username, String password) {
         this.id = id;
@@ -102,6 +114,14 @@ public class User {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 
     public LocalDateTime getCreatedAt() {

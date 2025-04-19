@@ -17,4 +17,12 @@ public class UserSession implements Serializable {
     public void setCurrentUser(User user) {
         this.currentUser = user;
     }
+
+    public String getUsername() {
+        return currentUser != null ? currentUser.getUsername() : null;
+    }
+
+    public String getEmail() {
+        return currentUser != null ? currentUser.getEmail().toString() : null;
+    }
 }

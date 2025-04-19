@@ -82,6 +82,13 @@
     padding: 1rem 0;
 }
 
+.form .form-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 1.5rem 0;
+}
+
 .email-wrapper {
     display: flex;       
     align-items: center;       
