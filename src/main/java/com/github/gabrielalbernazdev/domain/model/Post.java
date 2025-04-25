@@ -11,10 +11,28 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "posts")
+@NamedQueries({
+    @NamedQuery(
+        name  = "Post.findAllByUser",
+        query = "SELECT p FROM Post p WHERE p.user.id = :userId"
+    ),
+    @NamedQuery(
+        name  = "Post.findAllActiveByUser",
+        query = "SELECT p FROM Post p WHERE p.deletedAt IS NULL AND p.user.id = :userId"
+    ),
+    @NamedQuery(
+        name  = "Post.findByTitle",
+        query = "SELECT p FROM Post p WHERE p.title = :title"
+    )
+})
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -38,6 +56,16 @@ public class Post {
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 
     public Post() {}
 

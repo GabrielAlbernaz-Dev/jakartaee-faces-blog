@@ -12,14 +12,14 @@ public class UserMapper {
 
     public static UserDTO toDTO(User entity) {
         return new UserDTO(
-            entity.getId().toString(),
+            entity.getId() != null ? entity.getId().toString() : null,
             entity.getUsername()
         );
     }
 
     public static User toEntity(UserDTO dto) {
         return new User(
-            UUID.fromString(dto.getId()),
+            dto.getId() != null ? UUID.fromString(dto.getId()) : null,
             dto.getUsername()
         );
     }

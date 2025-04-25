@@ -12,15 +12,17 @@ public class PostMapper {
 
     public static PostDTO toDTO(Post entity) {
         return new PostDTO(
-            entity.getId().toString(),
+            entity.getId() != null ? entity.getId().toString() : null,
             entity.getTitle(),
-            entity.getContent()
+            entity.getContent(),
+            entity.getCreatedAt(),
+            entity.getUpdatedAt()
         );
     }
 
     public static Post toEntity(PostDTO dto) {
         return new Post(
-            UUID.fromString(dto.getId()),
+            dto.getId() != null ? UUID.fromString(dto.getId()) : null,
             dto.getTitle(),
             dto.getContent()
         );
@@ -36,5 +38,10 @@ public class PostMapper {
         return dtos.stream()
                    .map(PostMapper::toEntity)
                    .collect(Collectors.toList());
+    }
+
+    public static void updateEntityFromDTO(PostDTO dto, Post p) {
+        if (dto.getTitle()   != null) p.setTitle(dto.getTitle());
+        if (dto.getContent() != null) p.setContent(dto.getContent());
     }
 }

@@ -6,73 +6,61 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.github.gabrielalbernazdev.domain.model.Post;
-import com.github.gabrielalbernazdev.domain.model.User;
 import com.github.gabrielalbernazdev.repository.PostRepository;
 
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
+import jakarta.persistence.TypedQuery;
 
 @Stateless
 public class PostRepositoryImpl implements PostRepository {
     @PersistenceContext
-    private EntityManager entityManager;
+    private EntityManager em;
 
     @Override
-    public List<Post> findAllByUser(User user) {
-        UUID userId = user.getId();
-        String jpql = "SELECT p FROM Post p WHERE p.user.id = :userId";
-        return entityManager.createQuery(jpql, Post.class)
-                .setParameter("userId", userId)
+    public List<Post> findAllByUser(UUID userId) {
+        TypedQuery<Post> q = em.createNamedQuery("Post.findAllByUser", Post.class);
+        return q.setParameter("userId", userId)
                 .getResultList();
     }
 
     @Override
-    public List<Post> findAllActiveByUser(User user) {
-        UUID userId = user.getId();
-        String jpql = "SELECT p FROM Post p WHERE p.deletedAt IS NULL AND p.user.id = :userId";
-        return entityManager.createQuery(jpql, Post.class)
-                .setParameter("userId", userId)
+    public List<Post> findAllActiveByUser(UUID userId) {
+        TypedQuery<Post> q = em.createNamedQuery("Post.findAllActiveByUser", Post.class);
+        return q.setParameter("userId", userId)
                 .getResultList();
     }
 
     @Override
     public Optional<Post> findById(UUID id) {
-        return Optional.ofNullable(entityManager.find(Post.class, id));
+        return Optional.ofNullable(em.find(Post.class, id));
     }
 
     @Override
     public Optional<Post> findByTitle(String title) {
-        String jpql = "SELECT p FROM Post p WHERE p.title = :title";
-        return entityManager.createQuery(jpql, Post.class)
-                .setParameter("title", title)
+        TypedQuery<Post> q = em.createNamedQuery("Post.findByTitle", Post.class);
+        return q.setParameter("title", title)
                 .getResultStream()
                 .findFirst();
     }
 
     @Override
-    public Optional<Post> findByDescription(String description) {
-        String jqpl = "SELECT p FROM Post p WHERE p.description = :description";
-        return entityManager.createQuery(jqpl, Post.class)
-                .setParameter("description", description)
-                .getResultStream()
-                .findFirst();
-    }
-
-    @Override
-    @Transactional
     public void save(Post post) {
         if (post.getId() == null) {
-            entityManager.persist(post);
+            em.persist(post);
         } else {
-            entityManager.merge(post);
+            em.merge(post);
         }
     }
 
     @Override
-    @Transactional
-    public void delete(Post post) {
+    public void delete(UUID id) {
+        Post post = em.find(Post.class, id);
+        if (post == null) {
+            throw new EntityNotFoundException("Post with id " + id + " not found");
+        }
         post.setDeletedAt(LocalDateTime.now());
     }
 }

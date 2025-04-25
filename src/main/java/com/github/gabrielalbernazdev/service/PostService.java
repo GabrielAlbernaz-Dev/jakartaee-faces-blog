@@ -1,11 +1,14 @@
 package com.github.gabrielalbernazdev.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.github.gabrielalbernazdev.presentation.dto.PostDTO;
-import com.github.gabrielalbernazdev.presentation.dto.UserDTO;
 
 public interface PostService {
-    public List<PostDTO> getAllByUser(UserDTO userDTO);
-    public List<PostDTO> getAllActiveByUser(UserDTO userDTO);
+    public List<PostDTO> getAllByUser(UUID userId);
+    public List<PostDTO> getAllActiveByUser(UUID userId);
+    public void create(PostDTO postDTO);
+    public void update(PostDTO postDTO);
+    public void delete(UUID id);
 }

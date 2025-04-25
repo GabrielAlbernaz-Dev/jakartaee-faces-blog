@@ -3,10 +3,8 @@ package com.github.gabrielalbernazdev.presentation.controller;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-import com.github.gabrielalbernazdev.domain.model.Post;
-import com.github.gabrielalbernazdev.domain.model.User;
-import com.github.gabrielalbernazdev.mapper.PostMapper;
 import com.github.gabrielalbernazdev.mapper.UserMapper;
 import com.github.gabrielalbernazdev.presentation.dto.PostDTO;
 import com.github.gabrielalbernazdev.presentation.dto.UserDTO;
@@ -14,6 +12,8 @@ import com.github.gabrielalbernazdev.service.PostService;
 import com.github.gabrielalbernazdev.session.UserSession;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -33,23 +33,44 @@ public class PostController implements Serializable {
 
     @PostConstruct
     public void init() {
-        User currentUser = userSession.getCurrentUser();
-        System.out.println("------------------------- ");
-        System.out.println("Current user: " + currentUser);
-        System.out.println("Current user id: " + currentUser.getId());
-        System.out.println("------------------------- ");
-        if(currentUser != null) {
-            UserDTO userDTO = UserMapper.toDTO(userSession.getCurrentUser());
-            posts = service.getAllByUser(userDTO);
-        }
+        UserDTO userDTO = UserMapper.toDTO(userSession.getCurrentUser());
+        posts = service.getAllByUser(UUID.fromString(userDTO.getId()));
 
         categories.add("Tech");
         categories.add("Economy");
         categories.add("Entertainment");
     }
 
-    public void create() {
-        
+    public void save() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        UserDTO userDTO = UserMapper.toDTO(userSession.getCurrentUser());
+        try {
+            if (post.getId() == null) {
+                service.create(post);
+            } else {
+                service.update(post);
+            }
+        } catch (Exception e) {
+
+            facesContext.addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: " + e.getMessage(), null));
+        }
+
+        facesContext.addMessage(null,
+        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: " + "MLXD", null));
+
+        posts = service.getAllActiveByUser(UUID.fromString(userDTO.getId()));
+        post = new PostDTO();
+    }
+
+    public void delete(PostDTO postDTO) {
+        service.delete(UUID.fromString(postDTO.getId()));
+        UserDTO userDTO = UserMapper.toDTO(userSession.getCurrentUser());
+        posts = service.getAllActiveByUser(UUID.fromString(userDTO.getId()));
+    }
+
+    public void newPost() {
+        post = new PostDTO();
     }
 
     public PostDTO getPost() {

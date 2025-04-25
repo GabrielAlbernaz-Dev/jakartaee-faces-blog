@@ -3,7 +3,7 @@ body .ui-widget {
 }
 
 body .ui-button {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
 }
 
 body .ui-button.danger {
@@ -24,4 +24,19 @@ body .ui-button.danger:hover {
 
 .ui-messages-info-summary, .ui-messages-warn-summary, .ui-messages-error-summary, .ui-messages-fatal-summary, .ui-message-info-summary, .ui-message-warn-summary, .ui-message-error-summary, .ui-message-fatal-summary {
     font-size: 1.25rem;
+}
+
+.ui-datatable-tablewrapper table {
+    font-size: 1.45rem;
+}
+
+.ui-datatable-tablewrapper table .actions {
+    display: flex;
+    gap: .8rem;
+    flex-wrap: wrap;
+}
+
+.ui-datatable-tablewrapper table .actions .ui-button-icon-only {
+    font-size: 1.4rem;
+    padding: .3rem 1.5rem;
 }

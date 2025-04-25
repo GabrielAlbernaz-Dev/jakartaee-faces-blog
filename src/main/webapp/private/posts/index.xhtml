@@ -10,12 +10,13 @@
             Posts
             <h:outputText value="#{userSession.username}" rendered="#{not empty userSession.username}"/>
         </h1>
-        <h:form id="postForm">
+        <h:form id="post-form">
             <div style="display: flex; align-items: center; justify-content: space-between;">
                 <div></div>
                 <p:commandButton value="New Post"
                     icon="pi pi-plus"
-                    update=":dialogForm"
+                    actionListener="#{postController.newPost}"
+                    update=":create-post-form"
                     oncomplete="PF('dlg').show()"/>
             </div>
             <p:dataTable id="posts-table"
@@ -28,20 +29,22 @@
                 <p:ajax event="rowUnselect" update="@form"/>
                 <p:column headerText="Title">#{post.title}</p:column>
                 <p:column headerText="Content">#{post.content}</p:column>
-                <p:column headerText="Actions">
-                    <p:commandButton icon="pi pi-pencil" title="Editar"
-                                     update=":dialogForm"
+                <p:column headerText="Actions" styleClass="actions">
+                    <p:commandButton icon="pi pi-pencil" title="Edit"
+                                     actionListener="#{postController.setPost(post)}"
+                                     update=":create-post-form"
                                      oncomplete="PF('dlg').show()" />
     
-                    <p:commandButton icon="pi pi-trash" title="Excluir"
+                    <p:commandButton icon="pi pi-trash" title="Delete"
+                                     actionListener="#{postController.delete(post)}"
                                      update="@form"
                                      styleClass="danger"
-                                     onclick="return confirm('Deseja excluir?');"/>
+                                     onclick="return confirm('Do you want to exclude?');"/>
                 </p:column>
             </p:dataTable>  
         </h:form>
         <p:dialog header="Post" widgetVar="dlg" modal="true" resizable="false" closable="true" appendTo="@(body)" width="500">
-            <h:form id="dialogForm" styleClass="form">
+            <h:form id="create-post-form" styleClass="form">
                 <div class="form-group">
                     <p:outputLabel for="title" value="Title:" />
                     <p:inputText id="title"
@@ -53,23 +56,24 @@
                 <div class="form-group">
                     <p:outputLabel for="content" value="Content:" />
                     <p:inputTextarea id="content"
-                                    value="#{postController.post.content}"
-                                    required="true"
-                                    requiredMessage="Content is required"
-                                    rows="6"
-                                    styleClass="form-control" />
+                                     value="#{postController.post.content}"
+                                     required="true"
+                                     requiredMessage="Content is required"
+                                     rows="6"
+                                     styleClass="form-control" />
                 </div>
                 <div class="form-actions">
-                    <p:commandButton value="Save"
-                                    action="#{postController.create}"
-                                    update=":postForm"
-                                    oncomplete="PF('dlg').hide()"
-                                    styleClass="form-btn" />
-
                     <p:commandButton value="Cancel"
-                                    type="button"
-                                    onclick="PF('dlg').hide()"
-                                    styleClass="form-btn danger" />
+                                     type="button"
+                                     onclick="PF('dlg').hide()"
+                                     styleClass="form-btn danger" />
+
+                    <p:commandButton value="Save"
+                                     action="#{postController.save}"
+                                     update=":post-form"
+                                     process="@form"
+                                     oncomplete="PF('dlg').hide()"
+                                     styleClass="form-btn" />
                 </div>
             </h:form>
         </p:dialog>
