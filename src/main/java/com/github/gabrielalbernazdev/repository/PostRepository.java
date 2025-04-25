@@ -12,5 +12,5 @@ public interface PostRepository {
     Optional<Post> findById(UUID id);
     Optional<Post> findByTitle(String title);
     void save(Post post);
-    void delete(UUID id);
+    void delete(Post post);
 } 

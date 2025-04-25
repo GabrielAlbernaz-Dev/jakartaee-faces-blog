@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 import com.github.gabrielalbernazdev.mapper.UserMapper;
 import com.github.gabrielalbernazdev.presentation.dto.PostDTO;
@@ -26,6 +27,8 @@ public class PostController implements Serializable {
 
     @Inject
     private UserSession userSession;
+
+    private final Logger LOGGER = Logger.getLogger(PostController.class.getName());
 
     private PostDTO post = new PostDTO();
     private List<PostDTO> posts = new ArrayList<>();
@@ -51,13 +54,10 @@ public class PostController implements Serializable {
                 service.update(post);
             }
         } catch (Exception e) {
-
+            LOGGER.severe("Error: " + e.getMessage());
             facesContext.addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: " + e.getMessage(), null));
         }
-
-        facesContext.addMessage(null,
-        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: " + "MLXD", null));
 
         posts = service.getAllActiveByUser(UUID.fromString(userDTO.getId()));
         post = new PostDTO();

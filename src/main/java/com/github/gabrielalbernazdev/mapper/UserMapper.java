@@ -4,23 +4,29 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.github.gabrielalbernazdev.domain.converter.EmailConverter;
 import com.github.gabrielalbernazdev.domain.model.User;
 import com.github.gabrielalbernazdev.presentation.dto.UserDTO;
 
 public class UserMapper {
+    final static EmailConverter emailConverter = new EmailConverter();
+
     private UserMapper() {}
 
     public static UserDTO toDTO(User entity) {
         return new UserDTO(
             entity.getId() != null ? entity.getId().toString() : null,
-            entity.getUsername()
+            entity.getUsername(),
+            emailConverter.convertToDatabaseColumn(entity.getEmail())
         );
     }
 
     public static User toEntity(UserDTO dto) {
         return new User(
             dto.getId() != null ? UUID.fromString(dto.getId()) : null,
-            dto.getUsername()
+            dto.getUsername(),
+            dto.getPassword(),
+            emailConverter.convertToEntityAttribute(dto.getEmail())
         );
     }
 

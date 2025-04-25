@@ -10,9 +10,7 @@ import com.github.gabrielalbernazdev.repository.UserRepository;
 
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 
 @Stateless
@@ -22,46 +20,36 @@ public class UserRepositoryImpl implements  UserRepository {
 
     @Override
     public List<User> findAll() {
-        String jpql = "SELECT u FROM User u ORDER BY u.id";
-        return em.createQuery(jpql, User.class)
-                .getResultList();
+        return em
+          .createNamedQuery("User.findAll", User.class)
+          .getResultList();
     }
 
     @Override
     public List<User> findAllActive() {
-        String jpql = "SELECT u FROM User u WHERE p.active = true ORDER BY u.id";
-        return em.createQuery(jpql, User.class)
-                .getResultList();
+        return em
+          .createNamedQuery("User.findAllActive", User.class)
+          .getResultList();
     }
 
     @Override
     public Optional<User> findById(UUID id) {
-        final User user = em.find(User.class, id);
-        return Optional.ofNullable(user);
+        User u = em.find(User.class, id);
+        return Optional.ofNullable(u);
     }
 
     @Override
     public Optional<User> findByUsername(String username) {
-        try {
-            final String jpql = "SELECT u FROM User u WHERE u.username = :username";
-            TypedQuery<User> query = em.createQuery(jpql, User.class);
-            query.setParameter("username", username);
-            return Optional.of(query.getSingleResult());
-        } catch (NoResultException e) {
-            return Optional.empty();
-        }
+        TypedQuery<User> q = em.createNamedQuery("User.findByUsername", User.class);
+        q.setParameter("username", username);
+        return q.getResultStream().findFirst();
     }
 
     @Override
     public Optional<User> findByEmail(Email email) {
-        try {
-            final String jpql = "SELECT u FROM User u WHERE u.email = :email";
-            TypedQuery<User> query = em.createQuery(jpql, User.class);
-            query.setParameter("email", email.getValue());
-            return Optional.of(query.getSingleResult());
-        } catch (NoResultException e) {
-            return Optional.empty();
-        }
+        TypedQuery<User> q = em.createNamedQuery("User.findByEmail", User.class);
+        q.setParameter("email", email);
+        return q.getResultStream().findFirst();
     }
 
     @Override
@@ -79,15 +67,6 @@ public class UserRepositoryImpl implements  UserRepository {
 
     @Override
     public void delete(User user) {
-        User managedUser = em.find(User.class, user.getId());
-        if (managedUser != null) {
-            final String jpql = "UPDATE User u SET u.active = :active WHERE u.id = :id";
-            Query query = em.createQuery(jpql);
-    
-            query.setParameter("active", false);
-            query.setParameter("id", managedUser.getId());
-    
-            query.executeUpdate();
-        }
+        user.setActive(false);
     }
 }

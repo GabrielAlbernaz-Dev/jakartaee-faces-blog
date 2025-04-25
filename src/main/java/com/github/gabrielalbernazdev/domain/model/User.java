@@ -16,6 +16,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
@@ -23,6 +25,24 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
+@NamedQueries({
+    @NamedQuery(
+        name  = "User.findAll",
+        query = "SELECT u FROM User u ORDER BY u.id"
+    ),
+    @NamedQuery(
+        name  = "User.findAllActive",
+        query = "SELECT u FROM User u WHERE u.active = true ORDER BY u.id"
+    ),
+    @NamedQuery(
+        name  = "User.findByUsername",
+        query = "SELECT u FROM User u WHERE u.username = :username"
+    ),
+    @NamedQuery(
+        name  = "User.findByEmail",
+        query = "SELECT u FROM User u WHERE u.email = :email"
+    )
+})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -65,15 +85,17 @@ public class User {
 
     public User() {}
 
-    public User(UUID id, String username) {
+    public User(UUID id, String username, Email email) {
         this.id = id;
         this.username = username;
+        this.email = email;
     }
 
-    public User(UUID id, String username, String password) {
+    public User(UUID id, String username, String password, Email email) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.email = email;
     }
 
     public UUID getId() {

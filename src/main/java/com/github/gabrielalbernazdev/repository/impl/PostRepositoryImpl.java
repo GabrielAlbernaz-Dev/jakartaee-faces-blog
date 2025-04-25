@@ -10,7 +10,6 @@ import com.github.gabrielalbernazdev.repository.PostRepository;
 
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 
@@ -56,11 +55,8 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public void delete(UUID id) {
-        Post post = em.find(Post.class, id);
-        if (post == null) {
-            throw new EntityNotFoundException("Post with id " + id + " not found");
-        }
+    public void delete(Post post) {
         post.setDeletedAt(LocalDateTime.now());
+        em.merge(post);  
     }
 }

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.UUID;
 
 import com.github.gabrielalbernazdev.domain.model.User;
+import com.github.gabrielalbernazdev.mapper.UserMapper;
+import com.github.gabrielalbernazdev.presentation.dto.UserDTO;
 import com.github.gabrielalbernazdev.service.AuthService;
 import com.github.gabrielalbernazdev.session.UserSession;
 
@@ -22,7 +24,7 @@ public class AuthController implements Serializable {
     @Inject
     private UserSession userSession;
 
-    private User user = new User();
+    private UserDTO user = new UserDTO();
 
     public String login() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -42,8 +44,9 @@ public class AuthController implements Serializable {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         try {
             UUID userId = service.register(user);
-            user.setId(userId);
-            userSession.setCurrentUser(user);
+            User userEntity = UserMapper.toEntity(user);
+            userEntity.setId(userId);
+            userSession.setCurrentUser(userEntity);
             facesContext.addMessage(null, new FacesMessage("Register successful!"));
             return "/private/index?faces-redirect=true";
         } catch (Exception e) {
@@ -58,11 +61,11 @@ public class AuthController implements Serializable {
         return "/private/index?faces-redirect=true";
     }
 
-    public User getUser() {
+    public UserDTO getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserDTO user) {
         this.user = user;
     }
 }

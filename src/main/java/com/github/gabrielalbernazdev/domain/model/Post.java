@@ -41,7 +41,7 @@ public class Post {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "content", length = 255, nullable = false)
+    @Column(name = "content", columnDefinition = "TEXT", nullable = false)
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
