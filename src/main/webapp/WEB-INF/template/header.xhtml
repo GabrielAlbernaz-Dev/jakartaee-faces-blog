@@ -24,27 +24,33 @@
                         </div>
                         <ul class="dropdown-list">
                             <li class="dropdown-item">
-                                <i class="fa fa-cog"></i>
-                                <span class="action">Settings</span>
+                                <div class="dropdown-container">
+                                    <i class="fa fa-cog"></i>
+                                    <span class="action">Settings</span>
+                                </div>
                             </li>
                             <li class="dropdown-item">
-                                <i class="fa fa-user"></i>
-                                <span class="action">Profile</span>
+                                <div class="dropdown-container">
+                                    <i class="fa fa-user"></i>
+                                    <span class="action">Profile</span>
+                                </div>
                             </li>
                             <li class="dropdown-item">
-                                <i class="fa fa-file"></i>
-                                <p:link styleClass="action" 
-                                        value="Posts" 
-                                        outcome="/private/posts/index.xhtml"/>
+                                <div class="dropdown-container">
+                                    <i class="fa fa-file"></i>
+                                    <p:link styleClass="action" 
+                                            value="Posts" 
+                                            outcome="/private/posts/index.xhtml"/>
+                                </div>
                             </li>
-                            <li class="dropdown-item has-child-container logout-container">
+                            <li class="dropdown-item logout-container">
                                 <h:form styleClass="dropdown-container logout-form">
                                     <i class="fa fa-sign-out-alt"></i>
                                     <p:commandButton value="Logout"
                                                      action="#{authController.logout}"
                                                      process="@this"
                                                      update="@none"
-                                                     styleClass="logout"/>
+                                                     styleClass="action-button"/>
                                 </h:form>
                             </li>
                         </ul>

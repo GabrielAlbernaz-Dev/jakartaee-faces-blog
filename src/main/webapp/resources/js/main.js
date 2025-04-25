@@ -1,17 +1,18 @@
 (function(){
     document.addEventListener('DOMContentLoaded', function() {
         const profileContainer = document.querySelector('.profile-container');
-        const logoutContainers = document.querySelectorAll('.logout-container');
-        const logoutBtn = document.querySelector('.logout');
+        const dropdownItems = profileContainer.querySelectorAll('.dropdown-item');
         
-        profileContainer.addEventListener('click', (event) => {
+        profileContainer.addEventListener('click', e => {
             profileContainer.classList.toggle('active');
-            event.stopPropagation();
+            e.stopPropagation();
         });
 
-        logoutContainers.forEach(logoutContainer => {
-            logoutContainer.addEventListener('click', () => {
-                logoutBtn?.click();
+        dropdownItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const actionBtn = item.querySelector('.action, .action-button');
+                console.log(88,actionBtn);
+                actionBtn?.click();
             });
         });
         
