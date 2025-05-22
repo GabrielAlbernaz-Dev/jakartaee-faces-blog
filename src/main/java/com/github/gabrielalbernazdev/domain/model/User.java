@@ -22,6 +22,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.validation.Valid;
 
 @Entity
 @Table(name = "users")
@@ -56,6 +57,7 @@ public class User {
 
     @Convert(converter = EmailConverter.class)
     @Column(name = "email")
+    @Valid
     private Email email;
 
     @Column(name = "active")

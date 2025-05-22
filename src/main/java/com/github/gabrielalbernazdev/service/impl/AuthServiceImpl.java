@@ -19,6 +19,7 @@ import com.github.gabrielalbernazdev.util.PasswordUtil;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class AuthServiceImpl implements AuthService {
@@ -45,6 +46,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    @Transactional
     public UUID register(UserDTO userDTO) {
         final Optional<User> userByUsername = userRepository.findByUsername(userDTO.getUsername());
         if(userByUsername.isPresent()) {

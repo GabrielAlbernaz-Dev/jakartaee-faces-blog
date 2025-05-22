@@ -8,12 +8,15 @@ import com.github.gabrielalbernazdev.mapper.UserMapper;
 import com.github.gabrielalbernazdev.presentation.dto.UserDTO;
 import com.github.gabrielalbernazdev.service.AuthService;
 import com.github.gabrielalbernazdev.session.UserSession;
+import com.github.gabrielalbernazdev.util.ExceptionValidationUtil;
 
+import jakarta.ejb.EJBTransactionRolledbackException;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import jakarta.validation.ConstraintViolationException;
 
 @Named  
 @ViewScoped
@@ -49,6 +52,17 @@ public class AuthController implements Serializable {
             userSession.setCurrentUser(userEntity);
             facesContext.addMessage(null, new FacesMessage("Register successful!"));
             return "/private/index?faces-redirect=true";
+        } catch (ConstraintViolationException  e) {
+            ExceptionValidationUtil.handleViolations(e, facesContext);
+        } catch(EJBTransactionRolledbackException e) {
+            ConstraintViolationException cve = ExceptionValidationUtil.findConstraintViolation(e);
+            if (cve != null) {
+                ExceptionValidationUtil.handleViolations(cve, facesContext);
+            } else {
+                facesContext.addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "Error on transaction: " + e.getCause().getMessage(), null));
+            }
         } catch (Exception e) {
             facesContext.addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: " + e.getMessage(), null));
