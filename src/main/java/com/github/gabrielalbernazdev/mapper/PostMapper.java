@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.github.gabrielalbernazdev.domain.model.Category;
 import com.github.gabrielalbernazdev.domain.model.Post;
 import com.github.gabrielalbernazdev.presentation.dto.PostDTO;
 
@@ -15,6 +16,9 @@ public class PostMapper {
             entity.getId() != null ? entity.getId().toString() : null,
             entity.getTitle(),
             entity.getContent(),
+            entity.getCategory() != null
+                ? entity.getCategory().getId().toString()
+                : null,
             entity.getCreatedAt(),
             entity.getUpdatedAt()
         );
@@ -43,5 +47,10 @@ public class PostMapper {
     public static void updateEntityFromDTO(PostDTO dto, Post p) {
         if (dto.getTitle()   != null) p.setTitle(dto.getTitle());
         if (dto.getContent() != null) p.setContent(dto.getContent());
+        if (dto.getCategoryId() != null) {
+            Category cat = new Category();
+            cat.setId(UUID.fromString(dto.getCategoryId()));
+            p.setCategory(cat);
+        }
     }
 }

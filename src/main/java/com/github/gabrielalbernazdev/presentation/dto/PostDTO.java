@@ -6,6 +6,7 @@ public class PostDTO {
     private String id;
     private String title;
     private String content;
+    private String categoryId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -22,10 +23,11 @@ public class PostDTO {
         this.content = content;
     }
 
-    public PostDTO(String id, String title, String content, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public PostDTO(String id, String title, String content, String categoryId, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.title = title;
         this.content = content;
+        this.categoryId = categoryId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -50,6 +52,14 @@ public class PostDTO {
         this.content = content;
     }
 
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -64,5 +74,11 @@ public class PostDTO {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "PostDTO [id=" + id + ", title=" + title + ", content=" + content + ", categoryId=" + categoryId
+                + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
     }
 }

@@ -38,6 +38,14 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
+    public List<Post> findAllMostRecentByUser(UUID userId, int limit) {
+        TypedQuery<Post> q = em.createNamedQuery("Post.findMostRecentByUser", Post.class);
+        return q.setParameter("userId", userId)
+                .setMaxResults(limit) 
+                .getResultList();
+    }
+
+    @Override
     public Optional<Post> findByTitle(String title) {
         TypedQuery<Post> q = em.createNamedQuery("Post.findByTitle", Post.class);
         return q.setParameter("title", title)

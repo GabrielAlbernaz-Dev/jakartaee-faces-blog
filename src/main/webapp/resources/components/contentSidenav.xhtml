@@ -39,22 +39,12 @@
        <div class="recent-posts">
         <h3 class="heading">Recent Posts</h3>
         <div class="posts">
-          <div class="post">
-            <img src="#{request.contextPath}/resources/img/profile-avatar.png" alt="Homemade gifts for every occasion" />
-            <p>Title Post 1</p>
-          </div>
-          <div class="post">
-            <img src="#{request.contextPath}/resources/img/profile-avatar.png" alt="Halloween decor ideas for your porch" />
-            <p>Title Post 2</p>
-          </div>
-          <div class="post">
-            <img src="#{request.contextPath}/resources/img/profile-avatar.png" alt="My tips for hosting an easy birthday party" />
-            <p>Title Post 3</p>
-          </div>
-          <div class="post">
-            <img src="#{request.contextPath}/resources/img/profile-avatar.png" alt="My morning journaling routine" />
-            <p>Title Post 4</p>
-          </div>
+          <ui:repeat value="#{postController.recentPosts}" var="post">
+              <div class="post">
+                  <img src="#{request.contextPath}/resources/img/profile-avatar.png" alt="#{post.title}" />
+                  <p>#{post.title}</p>
+              </div>
+          </ui:repeat>
         </div>
       </div>
       </aside>

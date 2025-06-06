@@ -16,6 +16,14 @@ body .ui-button.danger:hover {
     border-color: #d32f2f;
 }
 
+body .ui-inputfield {
+    font-size: inherit;
+}
+
+body .ui-selectonemenu-list  {
+    font-size: 1.6rem;
+}
+
 .ui-messages ul {
     display: flex;
     flex-direction: column;

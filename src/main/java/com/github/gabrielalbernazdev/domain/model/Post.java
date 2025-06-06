@@ -22,16 +22,20 @@ import jakarta.persistence.Table;
 @NamedQueries({
     @NamedQuery(
         name  = "Post.findAllByUser",
-        query = "SELECT p FROM Post p WHERE p.user.id = :userId"
+        query = "SELECT p FROM Post p WHERE p.user.id = :userId ORDER BY p.id"
     ),
     @NamedQuery(
         name  = "Post.findAllActiveByUser",
-        query = "SELECT p FROM Post p WHERE p.deletedAt IS NULL AND p.user.id = :userId"
+        query = "SELECT p FROM Post p WHERE p.deletedAt IS NULL AND p.user.id = :userId ORDER BY p.id"
     ),
     @NamedQuery(
         name  = "Post.findByTitle",
         query = "SELECT p FROM Post p WHERE p.title = :title"
-    )
+    ),
+    @NamedQuery(
+        name  = "Post.findMostRecentByUser",
+        query = "SELECT p FROM Post p WHERE p.user.id = :userId ORDER BY p.createdAt DESC"
+    ),
 })
 public class Post {
     @Id
@@ -47,6 +51,10 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+    
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "category_id", nullable = true)
+    private Category category;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
@@ -110,6 +118,14 @@ public class Post {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public LocalDateTime getCreatedAt() {

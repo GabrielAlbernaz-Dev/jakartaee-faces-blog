@@ -2,6 +2,7 @@
     xmlns:ui="jakarta.faces.facelets" 
     xmlns:comp="http://xmlns.jcp.org/jsf/composite/components"
     xmlns:h="jakarta.faces.html"
+    xmlns:f="jakarta.faces.core"
     xmlns:p="http://primefaces.org/ui"
     template="/WEB-INF/template/privateLayout.xhtml">
     <ui:define name="pageTitle">Posts</ui:define>
@@ -10,13 +11,14 @@
             Posts
             <h:outputText value="#{userSession.username}" rendered="#{not empty userSession.username}"/>
         </h1>
+        <p:messages id="posts-messages" closable="true" showDetail="false"/>
         <h:form id="post-form">
             <div style="display: flex; align-items: center; justify-content: space-between;">
                 <div></div>
                 <p:commandButton value="New Post"
                     icon="pi pi-plus"
                     actionListener="#{postController.newPost}"
-                    update=":create-post-form"
+                    update=":create-update-post-form"
                     oncomplete="PF('dlg').show()"/>
             </div>
             <p:dataTable id="posts-table"
@@ -32,7 +34,7 @@
                 <p:column headerText="Actions" styleClass="actions">
                     <p:commandButton icon="pi pi-pencil" title="Edit"
                                      actionListener="#{postController.setPost(post)}"
-                                     update=":create-post-form"
+                                     update=":create-update-post-form posts-messages"
                                      oncomplete="PF('dlg').show()" />
     
                     <p:commandButton icon="pi pi-trash" title="Delete"
@@ -44,7 +46,7 @@
             </p:dataTable>  
         </h:form>
         <p:dialog header="Post" widgetVar="dlg" modal="true" resizable="false" closable="true" appendTo="@(body)" width="500">
-            <h:form id="create-post-form" styleClass="form">
+            <h:form id="create-update-post-form" styleClass="form">
                 <div class="form-group">
                     <p:outputLabel for="title" value="Title:" />
                     <p:inputText id="title"
@@ -61,6 +63,19 @@
                                      requiredMessage="Content is required"
                                      rows="6"
                                      styleClass="form-control" />
+                </div>
+                <div class="form-group">
+                    <p:selectOneMenu id="select-category"
+                                    value="#{postController.category}"
+                                    styleClass="form-control">
+                        <f:selectItem itemLabel="-- Select Category --"
+                                    itemValue="#{null}" noSelectionOption="true"/>
+                        <f:selectItems value="#{postController.categories}"
+                                    var="cat"
+                                    itemLabel="#{cat.name}"
+                                    itemValue="#{cat}" />
+                        <p:message for="select-category" showDetail="true"/>
+                    </p:selectOneMenu>
                 </div>
                 <div class="form-actions">
                     <p:commandButton value="Cancel"

@@ -1,3 +1,7 @@
 target/
 .mvn/wrapper/maven-wrapper.jar
 .vscode/
+.classpath
+.metadata/
+.project
+.settings/

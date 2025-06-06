@@ -39,6 +39,12 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public List<PostDTO> getAllMostRecentByUser(UUID userId, int limit) {
+        final List<Post> posts = repository.findAllMostRecentByUser(userId, limit);
+        return PostMapper.toDTOList(posts);
+    }
+
+    @Override
     public void create(PostDTO postDTO) {
         final Post post = PostMapper.toEntity(postDTO);
         final User currentUser = userSession.getCurrentUser();

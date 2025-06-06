@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+import com.github.gabrielalbernazdev.domain.model.Category;
+import com.github.gabrielalbernazdev.domain.model.Post;
 import com.github.gabrielalbernazdev.mapper.UserMapper;
 import com.github.gabrielalbernazdev.presentation.dto.PostDTO;
 import com.github.gabrielalbernazdev.presentation.dto.UserDTO;
+import com.github.gabrielalbernazdev.service.CategoryService;
 import com.github.gabrielalbernazdev.service.PostService;
 import com.github.gabrielalbernazdev.session.UserSession;
 
@@ -26,22 +29,26 @@ public class PostController implements Serializable {
     private PostService service;
 
     @Inject
+    private CategoryService categoryService;
+
+    @Inject
     private UserSession userSession;
 
     private final Logger LOGGER = Logger.getLogger(PostController.class.getName());
 
     private PostDTO post = new PostDTO();
     private List<PostDTO> posts = new ArrayList<>();
-    private List<String> categories = new ArrayList<>();
+    private List<PostDTO> recentPosts;
+    private Category category = new Category();
+    private List<Category> categories = new ArrayList<>();
 
     @PostConstruct
     public void init() {
         UserDTO userDTO = UserMapper.toDTO(userSession.getCurrentUser());
-        posts = service.getAllByUser(UUID.fromString(userDTO.getId()));
-
-        categories.add("Tech");
-        categories.add("Economy");
-        categories.add("Entertainment");
+        UUID userUUID = UUID.fromString(userDTO.getId());
+        posts = service.getAllByUser(userUUID);
+        recentPosts = service.getAllMostRecentByUser(userUUID, 4);
+        categories = categoryService.getAll();
     }
 
     public void save() {
@@ -49,6 +56,7 @@ public class PostController implements Serializable {
         UserDTO userDTO = UserMapper.toDTO(userSession.getCurrentUser());
         try {
             if (post.getId() == null) {
+                System.out.println("--------------------------" + post + "--------------------------");
                 service.create(post);
             } else {
                 service.update(post);
@@ -89,11 +97,27 @@ public class PostController implements Serializable {
         this.posts = posts;
     }
 
-    public List<String> getCategories() {
+    public List<PostDTO> getRecentPosts() {
+        return recentPosts;
+    }
+
+    public void setRecentPosts(List<PostDTO> recentPosts) {
+        this.recentPosts = recentPosts;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public List<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<String> categories) {
+    public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
 }

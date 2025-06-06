@@ -11,6 +11,7 @@ public interface PostRepository {
     List<Post> findAllActiveByUser(UUID userId);
     Optional<Post> findById(UUID id);
     Optional<Post> findByTitle(String title);
+    List<Post> findAllMostRecentByUser(UUID userId, int limit);
     void save(Post post);
     void delete(Post post);
 } 
