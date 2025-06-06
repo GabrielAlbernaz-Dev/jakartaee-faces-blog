@@ -350,4 +350,12 @@
     font-size: 1.6rem;
 }
 
+#main-footer {
+    font-family: "Playfair", serif;
+    font-size: 1.8rem;
+    text-align: center;
+    background: var(--dark);
+    color: var(--light);
+    padding: 1.4rem 0;
+}
 

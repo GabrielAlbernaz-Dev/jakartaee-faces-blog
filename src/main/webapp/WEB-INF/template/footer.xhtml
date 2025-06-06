@@ -1,3 +1,9 @@
-<ui:composition xmlns:ui="jakarta.faces.facelets">
-    <footer>My footer</footer>
+<ui:composition 
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:h="jakarta.faces.html">
+
+    <footer id="main-footer">
+        All rights reserved @<h:outputText value="#{dateController.currentYear}" />
+    </footer>
+
 </ui:composition>
